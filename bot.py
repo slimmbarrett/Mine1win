@@ -6,7 +6,7 @@ from telegram.ext import Updater, CommandHandler, CallbackContext
 BOT_TOKEN = os.getenv('7537994303:AAG15uJYwAmzVINLchNmzIjZ7So95RdkpdI')
 
 # URL вашего Web App
-WEB_APP_URL = 'https://prod-rnd-frontend-php.100hp.app/mines/?exitUrl=https%253A%252F%252F1win.com%252Fcasino&language=en&b=demo'
+WEB_APP_URL = 'https://mine1win.vercel.app/'
 
 def start(update: Update, context: CallbackContext) -> None:
     """Обработчик команды /start"""
