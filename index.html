@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Mines</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-header">
+        <div class="creator-text">By CashGenerator</div>
+        <div class="brand-text">1Win- CashGen</div>
+    </div>
+
+    <div class="game-container">
+        <div id="gameGrid" class="game-grid"></div>
+        
+        <div class="controls">
+            <div class="mines-selector">
+                <label for="minesCount">Number of Mines:</label>
+                <select id="minesCount" class="mines-select">
+                    <option value="3">3 Mines</option>
+                    <option value="5">5 Mines</option>
+                    <option value="7">7 Mines</option>
+                    <option value="10">10 Mines</option>
+                </select>
+            </div>
+            <button id="startButton" class="start-button">Play</button>
+        </div>
+    </div>
+
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Game Over!</h2>
+            <button id="restartBtn" class="app-button">Play Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
