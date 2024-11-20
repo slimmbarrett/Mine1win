@@ -165,19 +165,20 @@ body {
 .game-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
+    gap: 13px;
     width: 100%;
     max-width: 400px;
     aspect-ratio: 1;
     margin: 0 auto;
-    padding: 8px;
+    padding: 13px;
 }
 
 /* Cell Styles */
 .cell {
     position: relative;
     aspect-ratio: 1;
-    width: 100%;
+    width: 95%;
+    justify-self: center;
     background: linear-gradient(180deg, var(--cell-gradient-start) 0%, var(--cell-gradient-end) 100%);
     border: 2px solid rgba(216, 255, 252, 0.3);
     border-radius: 8px;
@@ -294,6 +295,38 @@ body {
         opacity: 0;
         transform: scale(1.2);
     }
+}
+
+/* Background Cracks */
+.background-cracks {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.crack-left {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 150px;
+    height: 300px;
+    background: url('crack1.e5b5a512a5195e45d54f.svg') center/contain no-repeat;
+    opacity: 0.3;
+}
+
+.crack-right {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 150px;
+    height: 300px;
+    background: url('crack2.5c66fca7c0e6b8b3f37a.svg') center/contain no-repeat;
+    opacity: 0.3;
 }
 
 /* Modal */
