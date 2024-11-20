@@ -20,6 +20,10 @@
 
 body {
     background-color: var(--background);
+    background-image: url('backgroundPhone.22ee95b37f8094fe25be.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: var(--primary);
     font-family: system-ui, -apple-system, sans-serif;
     min-height: 100vh;
