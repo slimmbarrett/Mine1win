@@ -45,27 +45,41 @@
         </div>
     </div>
 
+    <button id="installButton" class="install-button" style="display:none;">Добавить на главный экран</button>
+
     <script>
-        // Telegram WebApp SDK Initialization
         const tg = window.Telegram.WebApp;
 
-        // Automatically expand the app to full screen
+        // Разворачиваем WebApp в полный экран
         tg.expand();
 
-        // Optional: Change main button behavior
-        tg.MainButton.text = "Start Game";
+        // Проверяем, установлено ли приложение
+        if (!tg.isWebAppInstalled) {
+            const installButton = document.getElementById('installButton');
+            installButton.style.display = 'block'; // Показываем кнопку
+
+            installButton.addEventListener('click', () => {
+                tg.WebApp.installApp()
+                    .then(() => {
+                        alert("Приложение успешно добавлено на главный экран!");
+                        installButton.style.display = 'none'; // Скрываем кнопку после успешной установки
+                    })
+                    .catch((error) => {
+                        console.error("Ошибка при добавлении приложения:", error);
+                        alert("Не удалось добавить приложение: " + error.message);
+                    });
+            });
+        }
+
+        // Пример изменения кнопки Telegram MainButton
+        tg.MainButton.text = "Начать игру";
         tg.MainButton.onClick(() => {
-            document.getElementById("startButton").click(); // Trigger game start
+            document.getElementById("startButton").click(); // Запускаем игру
         });
         tg.MainButton.show();
 
-        // Log debug information
-        console.log("Telegram WebApp initialized:", tg.initDataUnsafe);
-
-        // Example interaction (detect start button click)
-        document.getElementById('startButton').addEventListener('click', () => {
-            tg.MainButton.text = "Restart Game";
-        });
+        // Логирование для отладки
+        console.log("Telegram WebApp Initialized:", tg.initDataUnsafe);
     </script>
     <script src="script.js"></script>
     <audio id="clickSound" src="Button Press Sound 30362.mp3" preload="auto"></audio>
