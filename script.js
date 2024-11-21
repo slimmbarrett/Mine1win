@@ -8,9 +8,9 @@ const gameState = {
 
 // Sound Effects
 const sounds = {
-    click: new Audio('sounds/click.mp3'),
+    click: new Audio('Button Press Sound 30362.mp3'),
     reveal: new Audio('sounds/reveal.mp3'),
-    mine: new Audio('sounds/mine.mp3'),
+    mine: new Audio('Mine Explosion Results.mp3'),
     win: new Audio('sounds/win.mp3')
 };
 
@@ -131,17 +131,18 @@ function revealAllCells() {
 function handleCellClick(index) {
     if (!gameState.gameStarted || gameState.grid[index].isRevealed) return;
     
+    playSound('click');  // Воспроизводим звук клика
+    
     const cell = gameState.grid[index];
     cell.isRevealed = true;
     cell.element.classList.add('revealed');
-    playSound('reveal');
     
     // Add icon
     const iconContainer = cell.element.querySelector('.icon-container');
     if (cell.isMine) {
         iconContainer.innerHTML = crossSVG;
         cell.element.classList.add('mine');
-        playSound('mine');
+        playSound('mine'); // Play mine explosion sound
         revealAllCells(); // Reveal all cells before showing game over
         gameOver(false);
     } else {
@@ -150,7 +151,6 @@ function handleCellClick(index) {
         
         // Check win condition
         if (gameState.revealed === gameState.grid.length - gameState.minesCount) {
-            playSound('win');
             revealAllCells(); // Also reveal all cells on win
             gameOver(true);
         }
