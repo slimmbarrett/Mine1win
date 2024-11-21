@@ -90,6 +90,19 @@ body {
     text-shadow: 0 0 15px rgba(151, 163, 203, 0.3);
 }
 
+.logo-container {
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.logo {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(216, 255, 252, 0.3));
+}
+
 /* Game Container */
 .game-container {
     max-width: 500px;
@@ -170,52 +183,47 @@ body {
     max-width: 400px;
     aspect-ratio: 1;
     margin: 0 auto;
-    padding: 13px;
+    padding: 24px;
+    background: var(--background);
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+}
+
+.game-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('cellsFrame.40eb57f7e28f2ca52ad4.png') center/100% 100% no-repeat;
+    pointer-events: none;
+    z-index: 2;
 }
 
 /* Cell Styles */
 .cell {
     position: relative;
     aspect-ratio: 1;
-    width: 95%;
+    width: 100%;
     justify-self: center;
-    background: linear-gradient(180deg, var(--cell-gradient-start) 0%, var(--cell-gradient-end) 100%);
-    border: 2px solid rgba(216, 255, 252, 0.3);
-    border-radius: 8px;
+    background: url('9eb6d34dd4f948296a69887205f253f6205e3fd6.png') center/contain no-repeat;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 15px rgba(55, 176, 206, 0.2);
 }
 
-.cell::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at center, var(--cell-glow) 0%, transparent 70%);
-    opacity: 0.3;
-    border-radius: 6px;
+.cell:nth-child(2n+1):not(.revealed):not(.mine) {
+    background-image: url('5da0c027893e851568fb8389aa68a859cd059d3c.png');
 }
 
 .cell:hover {
-    border-color: rgba(216, 255, 252, 0.5);
-    box-shadow: 0 0 20px rgba(55, 176, 206, 0.4);
-}
-
-.cell:hover::before {
-    opacity: 0.5;
+    filter: brightness(1.2);
+    transform: scale(1.05);
 }
 
 .cell.revealed {
     background: transparent;
-    border: none;
-    box-shadow: none;
-}
-
-.cell.revealed::before {
-    display: none;
 }
 
 .cell.revealed svg {
@@ -226,8 +234,6 @@ body {
 
 .cell.mine {
     background: transparent;
-    border: none;
-    box-shadow: none;
 }
 
 .cell.mine svg {
