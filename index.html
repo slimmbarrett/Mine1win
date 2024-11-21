@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signal Mines</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="background-cracks">
@@ -44,6 +45,28 @@
         </div>
     </div>
 
+    <script>
+        // Telegram WebApp SDK Initialization
+        const tg = window.Telegram.WebApp;
+
+        // Automatically expand the app to full screen
+        tg.expand();
+
+        // Optional: Change main button behavior
+        tg.MainButton.text = "Start Game";
+        tg.MainButton.onClick(() => {
+            document.getElementById("startButton").click(); // Trigger game start
+        });
+        tg.MainButton.show();
+
+        // Log debug information
+        console.log("Telegram WebApp initialized:", tg.initDataUnsafe);
+
+        // Example interaction (detect start button click)
+        document.getElementById('startButton').addEventListener('click', () => {
+            tg.MainButton.text = "Restart Game";
+        });
+    </script>
     <script src="script.js"></script>
     <audio id="clickSound" src="Button Press Sound 30362.mp3" preload="auto"></audio>
 </body>
