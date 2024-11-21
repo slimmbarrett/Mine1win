@@ -53,6 +53,15 @@
         // Разворачиваем WebApp в полный экран
         tg.expand();
 
+        // Настройка Menu Button
+        tg.setParams({
+            menuButton: {
+                text: "📋 Меню",
+                color: "#4CAF50", // Зеленый цвет
+                isVisible: true
+            }
+        });
+
         // Проверяем, установлено ли приложение
         if (!tg.isWebAppInstalled) {
             const installButton = document.getElementById('installButton');
