@@ -12,7 +12,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Константы
-BOT_TOKEN = '8158202881:AAHRytlN_gibZ9EwNQR_civzgxCvSYU4tHI'
+BOT_TOKEN = '7537994303:AAG15uJYwAmzVINLchNmzIjZ7So95RdkpdI'
 CHANNEL_ID = 'cashgeneratorUBT'
 CHANNEL_URL = 'https://t.me/cashgeneratorUBT'
 WIN_URL = 'https://1wxxlb.com/casino/list?open=register&p=dsgq'
