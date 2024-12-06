@@ -583,7 +583,8 @@ body {
 
 /* Adjust container to account for fixed marquee */
 .container {
-    margin-top: 40px;
+    margin-top: 60px;
+    padding-top: 20px;
 }
 
 /* Result Title */
