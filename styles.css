@@ -597,3 +597,20 @@ body {
     text-transform: uppercase;
     text-shadow: 0 0 10px rgba(151, 163, 203, 0.5);
 }
+
+/* Logo Styles */
+.top-logo {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 200px;
+    text-align: center;
+}
+
+.top-logo img {
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+}
