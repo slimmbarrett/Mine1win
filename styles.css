@@ -175,37 +175,103 @@ body {
 }
 
 /* Mines Game Styles */
+.mines-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.mines-header {
+    text-align: center;
+}
+
+.game-title {
+    color: var(--primary);
+    font-size: 36px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(151, 163, 203, 0.5);
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(151, 163, 203, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(151, 163, 203, 0.2);
+    margin-top: 20px;
+}
+
+.mines-select-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mines-select-container label {
+    color: var(--primary);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#minesCount {
+    background: rgba(151, 163, 203, 0.1);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+#minesCount:hover {
+    background: rgba(151, 163, 203, 0.2);
+    box-shadow: 0 0 15px rgba(151, 163, 203, 0.3);
+}
+
 .game-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    max-width: 500px;
-    margin: 20px auto;
+    gap: 12px;
+    max-width: 600px;
+    margin: 0 auto;
     padding: 20px;
+    background: rgba(151, 163, 203, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(151, 163, 203, 0.2);
 }
 
 .cell {
     aspect-ratio: 1;
-    background: var(--cell-bg);
+    background: rgba(151, 163, 203, 0.1);
     border: 2px solid var(--cell-border);
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cell:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(151, 163, 203, 0.3);
+    box-shadow: 0 0 20px rgba(151, 163, 203, 0.4);
 }
 
 .cell.revealed {
     background: linear-gradient(135deg, var(--cell-gradient-start), var(--cell-gradient-end));
+    transform: scale(1);
 }
 
 .cell.mine {
-    background: #ff3b3b;
+    background: linear-gradient(135deg, #ff3b3b, #ff1f1f);
+    border-color: #ff3b3b;
 }
 
 .icon-container {
@@ -221,6 +287,29 @@ body {
     opacity: 1;
 }
 
+.cell-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 5px rgba(255, 165, 0, 0.5));
+}
+
+.icon-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.revealed .icon-container {
+    opacity: 1;
+}
+
 .modal {
     display: none;
     position: fixed;
@@ -228,32 +317,28 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--modal-bg);
+    background: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    backdrop-filter: blur(5px);
 }
 
 .modal-content {
     background: var(--background);
-    padding: 30px;
-    border-radius: 15px;
-    border: 1px solid var(--primary);
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid var(--primary);
     text-align: center;
+    box-shadow: 0 0 30px rgba(151, 163, 203, 0.3);
 }
 
-.controls {
-    text-align: center;
-    margin: 20px 0;
-}
-
-#minesCount {
-    background: var(--cell-bg);
+#gameOverText {
     color: var(--primary);
-    border: 1px solid var(--primary);
-    padding: 10px;
-    border-radius: 5px;
-    margin-right: 10px;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(151, 163, 203, 0.5);
 }
 
 /* Game Grid */
@@ -550,6 +635,20 @@ body {
     font-weight: bold;
     color: #00ff00;
     margin: 20px 0;
+}
+
+#signalValue {
+    font-family: 'Halvar Breit', monospace;
+    font-size: 48px;
+    font-weight: bold;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(151, 163, 203, 0.5);
+    transition: color 0.3s ease;
+}
+
+.action-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 /* CoinFlip Styles */
