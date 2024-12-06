@@ -3,93 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signal Mines</title>
+    <title>Game Menu</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="background-cracks" style="margin-top: 20px;"> <!-- Добавлен отступ сверху -->
-        <div class="crack-left"></div>
-        <div class="crack-right"></div>
+    <div class="marquee-container">
+        <div class="marquee">
+            <span>PROMO - CashGen</span>
+            <span>PROMO - CashGen</span>
+            <span>PROMO - CashGen</span>
+            <span>PROMO - CashGen</span>
+            <span>PROMO - CashGen</span>
+            <span>PROMO - CashGen</span>
+            <span>PROMO - CashGen</span>
+            <span>PROMO - CashGen</span>
+        </div>
     </div>
-    <div class="game-header" style="margin-top: 40px;"> <!-- Добавлен отступ сверху -->
-        <div class="creator-text">By CashGenerator</div>
-        <div class="brand-text">1Win- CashGen</div>
-    </div>
-
-    <div class="logo-container" style="margin-top: 20px;"> <!-- Добавлен отступ сверху -->
-        <img src="1win-normal.svg" alt="1Win Logo" class="logo">
-    </div>
-
-    <div class="game-container" style="margin-top: 50px;"> <!-- Добавлен отступ сверху -->
-        <div id="gameGrid" class="game-grid"></div>
-        
-        <div class="controls">
-            <div class="mines-selector">
-                <label for="minesCount">Number of Mines:</label>
-                <select id="minesCount" class="mines-select">
-                    <option value="3">3 Mines</option>
-                    <option value="5">5 Mines</option>
-                    <option value="7">7 Mines</option>
-                    <option value="10">10 Mines</option>
-                </select>
+    <div class="container">
+        <!-- Main Menu -->
+        <div id="mainMenu">
+            <div class="menu-grid">
+                <div class="game-card" onclick="showGame('mines')">
+                    <img src="1win Mines.png" alt="Mines Game">
+                    <h2>Mines</h2>
+                </div>
+                <div class="game-card" onclick="showGame('luckyjet')">
+                    <img src="Lucky Jet Game 3.jpg" alt="LuckyJet Game">
+                    <h2>LuckyJet</h2>
+                </div>
+                <div class="game-card bottom-card" onclick="showGame('coinflip')">
+                    <img src="Euro Coin Icon.png" alt="CoinFlip Game">
+                    <h2>CoinFlip</h2>
+                </div>
             </div>
-            <button id="startButton" class="start-button">Play</button>
+        </div>
+
+        <!-- Mines Game -->
+        <div id="minesGame" class="game-container" style="display: none;">
+            <button onclick="showMenu()" class="back-button">Back to Menu</button>
+            <div class="mines-content">
+                <iframe 
+                    src="https://mine1win.vercel.app/"
+                    frameborder="0"
+                    style="width: 100%; height: 80vh; border: none;"
+                ></iframe>
+            </div>
+        </div>
+
+        <!-- LuckyJet Game -->
+        <div id="luckyjetGame" class="game-container" style="display: none;">
+            <button onclick="showMenu()" class="back-button">Back to Menu</button>
+            <div class="luckyjet-content">
+                <img src="Luckyjet Logo.png" alt="LuckyJet Logo" class="game-logo">
+                <h2 class="result-title">Result</h2>
+                <div class="signal-display">
+                    <span id="signalValue">0.00</span>
+                </div>
+                <button onclick="getSignal()" class="action-button">Get Signal</button>
+            </div>
+        </div>
+
+        <!-- CoinFlip Game -->
+        <div id="coinflipGame" class="game-container" style="display: none;">
+            <button onclick="showMenu()" class="back-button">Back to Menu</button>
+            <div class="coinflip-content">
+                <div id="coin">
+                    <div class="side-a">
+                        <img src="Euro Coin Icon.png" alt="Heads">
+                    </div>
+                    <div class="side-b">
+                        <img src="Dollar Coin Icon.png" alt="Tails">
+                    </div>
+                </div>
+                <div id="flipResult" class="flip-result"></div>
+                <button onclick="flipCoin()" class="action-button">Flip</button>
+            </div>
         </div>
     </div>
-
-    <div id="gameOverModal" class="modal">
-        <div class="modal-content">
-            <h2 id="modalTitle">Game Over!</h2>
-            <button id="restartBtn" class="app-button">Play Again</button>
-        </div>
-    </div>
-
-    <button id="installButton" class="install-button" style="display:none;">Добавить на главный экран</button>
-
-    <script>
-        const tg = window.Telegram.WebApp;
-
-        // Разворачиваем WebApp в полный экран
-        tg.expand();
-
-        // Настройка Menu Button
-        tg.setParams({
-            menuButton: {
-                text: "📋 Меню",
-                color: "#4CAF50", // Зеленый цвет
-                isVisible: true
-            }
-        });
-
-        // Проверяем, установлено ли приложение
-        if (!tg.isWebAppInstalled) {
-            const installButton = document.getElementById('installButton');
-            installButton.style.display = 'block'; // Показываем кнопку
-
-            installButton.addEventListener('click', () => {
-                tg.WebApp.installApp()
-                    .then(() => {
-                        alert("Приложение успешно добавлено на главный экран!");
-                        installButton.style.display = 'none'; // Скрываем кнопку после успешной установки
-                    })
-                    .catch((error) => {
-                        console.error("Ошибка при добавлении приложения:", error);
-                        alert("Не удалось добавить приложение: " + error.message);
-                    });
-            });
-        }
-
-        // Пример изменения кнопки Telegram MainButton
-        tg.MainButton.text = "Начать игру";
-        tg.MainButton.onClick(() => {
-            document.getElementById("startButton").click(); // Запускаем игру
-        });
-        tg.MainButton.show();
-
-        // Логирование для отладки
-        console.log("Telegram WebApp Initialized:", tg.initDataUnsafe);
-    </script>
     <script src="script.js"></script>
     <audio id="clickSound" src="Button Press Sound 30362.mp3" preload="auto"></audio>
 </body>
