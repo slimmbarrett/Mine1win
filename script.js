@@ -198,3 +198,83 @@ document.addEventListener('DOMContentLoaded', () => {
     
     startGame();
 });
+
+// Game navigation
+function showMenu() {
+    document.querySelectorAll('.game-container').forEach(container => {
+        container.style.display = 'none';
+    });
+    document.getElementById('mainMenu').style.display = 'block';
+}
+
+function showGame(gameName) {
+    document.getElementById('mainMenu').style.display = 'none';
+    document.querySelectorAll('.game-container').forEach(container => {
+        container.style.display = 'none';
+    });
+    document.getElementById(gameName + 'Game').style.display = 'block';
+}
+
+// LuckyJet Game Logic
+function getSignal() {
+    const min = 1; // 0.01
+    const max = 250; // 2.50
+    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    const formattedNumber = (randomNumber / 100).toFixed(2);
+    
+    const display = document.getElementById('signalValue');
+    display.textContent = 'X' + formattedNumber;
+    
+    // Add animation effect
+    display.style.animation = 'none';
+    display.offsetHeight; // Trigger reflow
+    display.style.animation = 'pulse 0.5s ease-in-out';
+}
+
+// CoinFlip Game Logic
+let isFlipping = false;
+
+async function flipCoin() {
+    if (isFlipping) return;
+    isFlipping = true;
+    
+    const coin = document.getElementById('coin');
+    const resultDisplay = document.getElementById('flipResult');
+    if (!coin || !resultDisplay) return;
+
+    // Clear previous result
+    resultDisplay.textContent = 'Flipping...';
+
+    // Play click sound
+    playSound('click');
+    
+    // Reset animation
+    coin.style.animation = 'none';
+    coin.offsetHeight; // Trigger reflow
+    
+    // Add flip animation
+    coin.style.animation = 'flip 3s ease-in-out';
+    
+    // Random result
+    const result = Math.random() < 0.5 ? 'heads' : 'tails';
+    
+    // Wait for animation
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    // Display result
+    resultDisplay.textContent = `Result: ${result.toUpperCase()}!`;
+    
+    isFlipping = false;
+    return result;
+}
+
+// Add CSS animation
+const style = document.createElement('style');
+style.textContent = `
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+`;
+document.head.appendChild(style);
