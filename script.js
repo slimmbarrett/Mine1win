@@ -30,10 +30,7 @@ function toggleSound() {
 }
 
 // SVG Icons
-const starSVG = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
-    fill="#d8fffc" stroke="#97A3CB" stroke-width="1.5"/>
-</svg>`;
+const starIcon = '<img src="star.png" alt="Star" class="cell-icon">';
 
 const crossSVG = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M18 6L6 18M6 6L18 18" stroke="#ff3b3b" stroke-width="2.5" stroke-linecap="round"/>
@@ -121,7 +118,7 @@ function revealAllCells() {
                 iconContainer.innerHTML = crossSVG;
                 cell.element.classList.add('mine');
             } else {
-                iconContainer.innerHTML = starSVG;
+                iconContainer.innerHTML = starIcon;
             }
         }
     });
@@ -146,7 +143,7 @@ function handleCellClick(index) {
         revealAllCells(); // Reveal all cells before showing game over
         gameOver(false);
     } else {
-        iconContainer.innerHTML = starSVG;
+        iconContainer.innerHTML = starIcon;
         gameState.revealed++;
         
         // Check win condition
@@ -216,19 +213,44 @@ function showGame(gameName) {
 }
 
 // LuckyJet Game Logic
-function getSignal() {
-    const min = 1; // 0.01
-    const max = 250; // 2.50
-    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-    const formattedNumber = (randomNumber / 100).toFixed(2);
+async function getSignal() {
+    const signalDisplay = document.getElementById('signalValue');
+    if (!signalDisplay) return;
+
+    // Play click sound
+    playSound('click');
+
+    // Generate random result between 1.00 and 10.00
+    const finalValue = (1 + Math.random() * 9).toFixed(2);
     
-    const display = document.getElementById('signalValue');
-    display.textContent = 'X' + formattedNumber;
+    // Start from 1.00
+    let currentValue = 1.00;
     
-    // Add animation effect
-    display.style.animation = 'none';
-    display.offsetHeight; // Trigger reflow
-    display.style.animation = 'pulse 0.5s ease-in-out';
+    // Animate the counter
+    const duration = 2000; // 2 seconds
+    const fps = 30;
+    const steps = duration / (1000 / fps);
+    const increment = (finalValue - currentValue) / steps;
+    
+    // Disable button during animation
+    const button = document.querySelector('.action-button');
+    if (button) button.disabled = true;
+
+    // Animation loop
+    function animate() {
+        if (currentValue < finalValue) {
+            currentValue += increment;
+            signalDisplay.textContent = `X${currentValue.toFixed(2)}`;
+            requestAnimationFrame(animate);
+        } else {
+            signalDisplay.textContent = `X${finalValue}`;
+            if (button) button.disabled = false;
+        }
+    }
+
+    // Start with X1.00
+    signalDisplay.textContent = 'X1.00';
+    animate();
 }
 
 // CoinFlip Game Logic
