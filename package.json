@@ -1,0 +1,14 @@
+{
+  "name": "mine1win",
+  "version": "1.0.0",
+  "description": "1Win Games Platform",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  },
+  "type": "module"
+}
