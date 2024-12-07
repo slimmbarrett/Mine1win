@@ -1091,3 +1091,85 @@ body {
         transform: translateY(0);
     }
 }
+
+.subscription-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--background);
+}
+
+.subscription-content {
+    background: rgba(151, 163, 203, 0.1);
+    border: 1px solid var(--primary);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.subscription-content h2 {
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.telegram-button {
+    display: inline-block;
+    background: linear-gradient(45deg, #0088cc, #00a2ff);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 20px 0;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.telegram-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 136, 204, 0.3);
+}
+
+.verification-form {
+    margin-top: 20px;
+}
+
+.verification-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    margin-bottom: 15px;
+}
+
+.verification-form input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.verify-button {
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.verify-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(151, 163, 203, 0.3);
+}
+
+.verify-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
