@@ -204,11 +204,19 @@ function showMenu() {
 }
 
 function showGame(gameName) {
-    document.getElementById('mainMenu').style.display = 'none';
     document.querySelectorAll('.game-container').forEach(container => {
         container.style.display = 'none';
     });
-    document.getElementById(gameName + 'Game').style.display = 'block';
+    document.getElementById('mainMenu').style.display = 'none';
+    
+    if (gameName === 'mines') {
+        document.getElementById('minesGame').style.display = 'block';
+        initializeGame();
+    } else if (gameName === 'luckyjet') {
+        document.getElementById('luckyjetGame').style.display = 'block';
+    } else if (gameName === 'coinflip') {
+        document.getElementById('coinflipGame').style.display = 'block';
+    }
 }
 
 // Navigation functions
@@ -228,92 +236,137 @@ function showReferralStep() {
 }
 
 // LuckyJet Game Logic
-async function getSignal() {
-    const signalDisplay = document.getElementById('signalValue');
-    if (!signalDisplay) return;
-
-    // Play click sound
-    playSound('click');
-
-    // Generate random result between 1.00 and 10.00
-    const finalValue = (1 + Math.random() * 9).toFixed(2);
-    
-    // Start from 1.00
-    let currentValue = 1.00;
-    
-    // Animate the counter
-    const duration = 2000; // 2 seconds
-    const fps = 30;
-    const steps = duration / (1000 / fps);
-    const increment = (finalValue - currentValue) / steps;
-    
-    // Disable button during animation
-    const button = document.querySelector('.action-button');
-    if (button) button.disabled = true;
-
-    // Animation loop
-    function animate() {
-        if (currentValue < finalValue) {
-            currentValue += increment;
-            signalDisplay.textContent = `X${currentValue.toFixed(2)}`;
-            requestAnimationFrame(animate);
-        } else {
-            signalDisplay.textContent = `X${finalValue}`;
-            if (button) button.disabled = false;
-        }
-    }
-
-    // Start with X1.00
+function getSignal() {
+    const signalDisplay = document.getElementById('signalDisplay');
+    const plane = document.getElementById('luckyjetPlane');
     signalDisplay.textContent = 'X1.00';
-    animate();
+    
+    // Add extra animation to plane during signal
+    plane.style.animation = 'none';
+    plane.offsetHeight; // Trigger reflow
+    plane.style.animation = 'fly 1s ease-in-out infinite';
+    
+    // Disable button during calculation
+    const button = document.querySelector('.signal-button');
+    button.disabled = true;
+    
+    let currentValue = 1.00;
+    const finalValue = (Math.random() * 2 + 1.5).toFixed(2); // Random number between 1.50 and 3.50
+    const duration = 2000; // 2 seconds
+    const steps = 60; // 60 steps for smooth animation
+    const stepDuration = duration / steps;
+    const valueIncrement = (parseFloat(finalValue) - currentValue) / steps;
+    
+    const interval = setInterval(() => {
+        currentValue += valueIncrement;
+        if (currentValue >= parseFloat(finalValue)) {
+            clearInterval(interval);
+            currentValue = parseFloat(finalValue);
+            playSound('click');
+            button.disabled = false;
+            // Return plane to normal animation
+            plane.style.animation = 'fly 2s ease-in-out infinite';
+        }
+        signalDisplay.textContent = `X${currentValue.toFixed(2)}`;
+    }, stepDuration);
 }
 
 // CoinFlip Game Logic
 let isFlipping = false;
 
-async function flipCoin() {
+function flipCoin() {
     if (isFlipping) return;
-    isFlipping = true;
     
     const coin = document.getElementById('coin');
+    const flipButton = document.querySelector('.flip-button');
     const resultDisplay = document.getElementById('flipResult');
-    if (!coin || !resultDisplay) return;
-
-    // Clear previous result
-    resultDisplay.textContent = 'Flipping...';
-
-    // Play click sound
+    
+    isFlipping = true;
+    flipButton.disabled = true;
+    resultDisplay.textContent = '';
+    resultDisplay.classList.remove('show');
+    
     playSound('click');
     
-    // Reset animation
+    // Random number of rotations between 5 and 10
+    const rotations = 5 + Math.floor(Math.random() * 5);
+    const isHeads = Math.random() > 0.5;
+    
+    // Add flipping animation
     coin.style.animation = 'none';
     coin.offsetHeight; // Trigger reflow
+    coin.style.animation = `flip-${isHeads ? 'heads' : 'tails'} 3s ease-out forwards`;
     
-    // Add flip animation
-    coin.style.animation = 'flip 3s ease-in-out';
-    
-    // Random result
-    const result = Math.random() < 0.5 ? 'heads' : 'tails';
-    
-    // Wait for animation
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    
-    // Display result
-    resultDisplay.textContent = `Result: ${result.toUpperCase()}!`;
-    
-    isFlipping = false;
-    return result;
+    // Show result after animation
+    setTimeout(() => {
+        resultDisplay.textContent = isHeads ? 'HEADS!' : 'TAILS!';
+        resultDisplay.classList.add('show');
+        isFlipping = false;
+        flipButton.disabled = false;
+        playSound(isHeads ? 'win' : 'reveal');
+    }, 3000);
 }
 
-// Add CSS animation
+// Add CSS animation for coin flip
 const style = document.createElement('style');
 style.textContent = `
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+@keyframes flip-heads {
+    0% { transform: rotateX(0); }
+    100% { transform: rotateX(${360 * 5}deg); }
+}
+
+@keyframes flip-tails {
+    0% { transform: rotateX(0); }
+    100% { transform: rotateX(${360 * 5 + 180}deg); }
+}
+
+.coin {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease-out;
+}
+
+.coin .heads,
+.coin .tails {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.coin .heads img,
+.coin .tails img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.coin .tails {
+    transform: rotateX(180deg);
+}
+
+.signal-display {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    text-align: center;
+    white-space: pre-line;
+}
+
+.signal-button:disabled,
+.flip-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 `;
+
 document.head.appendChild(style);
 
 // Language translations
