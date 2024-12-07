@@ -885,75 +885,16 @@ body {
     background: #45a049;
 }
 
-/* Marquee Styles */
-.marquee-container {
-    width: 100%;
-    background: rgba(151, 163, 203, 0.1);
-    border-bottom: 1px solid var(--primary);
-    overflow: hidden;
-    position: fixed;
-    top: 160px;
-    z-index: 1000;
-}
-
-.marquee {
-    display: flex;
-    width: fit-content;
-    animation: marquee 20s linear infinite;
-    gap: 0;
-}
-
-.marquee span {
-    color: var(--primary);
-    font-size: 18px;
-    padding: 10px 10px;
-    white-space: nowrap;
-    text-transform: uppercase;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(151, 163, 203, 0.5);
-}
-
-@keyframes marquee {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-/* Adjust container to account for fixed marquee */
-.container {
-    margin-top: 200px;
-    padding-top: 20px;
-}
-
-/* Result Title */
-.result-title {
-    color: var(--primary);
-    text-align: center;
-    margin: 20px 0;
-    font-size: 24px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(151, 163, 203, 0.5);
-}
-
 /* Logo Styles */
 .top-logo {
-    position: fixed;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    width: 200px;
     text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .top-logo img {
-    width: 100%;
-    height: auto;
     max-width: 200px;
+    height: auto;
 }
 
 /* Language Selection */
