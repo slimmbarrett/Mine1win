@@ -520,3 +520,72 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Subscription verification
+async function verifySubscription() {
+    const telegramInput = document.getElementById('telegramUsername');
+    const username = telegramInput.value.trim();
+    
+    if (!username) {
+        showError('Please enter your Telegram username');
+        return;
+    }
+
+    // Show loading state
+    const verifyButton = document.querySelector('.verify-button');
+    const originalText = verifyButton.textContent;
+    verifyButton.disabled = true;
+    verifyButton.textContent = 'Verifying...';
+
+    try {
+        // Get user info first
+        const userInfo = await TelegramAPI.getTelegramUserInfo(username);
+        
+        if (!userInfo) {
+            showError('Invalid Telegram username');
+            return;
+        }
+
+        // Check subscription
+        const isSubscribed = await TelegramAPI.checkSubscription(userInfo.id);
+        
+        if (isSubscribed) {
+            // Save verification status
+            localStorage.setItem('telegramVerified', 'true');
+            localStorage.setItem('telegramUsername', username);
+            
+            // Proceed to next step
+            showRegistrationStep();
+        } else {
+            showError('Please subscribe to our Telegram channel first');
+        }
+    } catch (error) {
+        console.error('Verification error:', error);
+        showError('Failed to verify subscription. Please try again.');
+    } finally {
+        // Reset button state
+        verifyButton.disabled = false;
+        verifyButton.textContent = originalText;
+    }
+}
+
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    
+    // Remove any existing error messages
+    const existingError = document.querySelector('.error-message');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // Add new error message
+    const verifyButton = document.querySelector('.verify-button');
+    verifyButton.parentNode.insertBefore(errorDiv, verifyButton.nextSibling);
+    
+    // Auto-remove after 3 seconds
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 3000);
+}
