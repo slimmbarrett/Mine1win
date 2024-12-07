@@ -105,9 +105,13 @@
                             <option value="7">7 Mines</option>
                         </select>
                         <button id="startButton" class="start-button">Start Game</button>
-                        <button class="sound-button" onclick="toggleSound()">
-                            <img src="sound-on.svg" alt="Toggle Sound">
-                        </button>
+                    </div>
+                </div>
+                <!-- Game Over Modal -->
+                <div id="gameOverModal" class="modal">
+                    <div class="modal-content">
+                        <h2 id="gameOverText">Game Over!</h2>
+                        <button id="restartBtn">Play Again</button>
                     </div>
                 </div>
             </div>
@@ -116,9 +120,11 @@
             <div id="luckyjetGame" class="game-container" style="display: none;">
                 <button onclick="showMenu()" class="back-button">Back to Menu</button>
                 <div class="luckyjet-content">
+                    <h2 class="game-title">LuckyJet</h2>
+                    <img src="Luckyjet Logo.png" alt="LuckyJet" class="luckyjet-image" id="luckyjetPlane">
                     <div class="signal-container">
+                        <div id="signalDisplay" class="signal-display">X1.00</div>
                         <button onclick="getSignal()" class="signal-button">Get Signal</button>
-                        <div id="signalResult" class="signal-result"></div>
                     </div>
                 </div>
             </div>
@@ -127,11 +133,17 @@
             <div id="coinflipGame" class="game-container" style="display: none;">
                 <button onclick="showMenu()" class="back-button">Back to Menu</button>
                 <div class="coinflip-content">
+                    <h2 class="game-title">CoinFlip</h2>
                     <div class="coin-container">
                         <div id="coin" class="coin">
-                            <div class="heads"></div>
-                            <div class="tails"></div>
+                            <div class="heads">
+                                <img src="Dollar Icon.png" alt="Heads">
+                            </div>
+                            <div class="tails">
+                                <img src="Euro Icon (1).png" alt="Tails">
+                            </div>
                         </div>
+                        <div id="flipResult" class="flip-result"></div>
                     </div>
                     <button onclick="flipCoin()" class="flip-button">Flip Coin</button>
                 </div>
@@ -139,15 +151,6 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="gameOverModal" class="modal">
-        <div class="modal-content">
-            <h2 id="gameOverText"></h2>
-            <button id="restartBtn">Play Again</button>
-        </div>
-    </div>
-
-    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
 </html>
