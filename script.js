@@ -50,7 +50,6 @@ function initializeGame() {
     gameState.revealed = 0;
     gameState.gameStarted = false;
     gameGrid.innerHTML = '';
-    modal.style.display = 'none';
     
     // Create 5x5 grid
     for (let i = 0; i < 25; i++) {
@@ -212,6 +211,22 @@ function showGame(gameName) {
     document.getElementById(gameName + 'Game').style.display = 'block';
 }
 
+// Navigation functions
+function showLanguageSelection() {
+    document.getElementById('subscriptionFlow').style.display = 'none';
+    document.getElementById('languageSelection').style.display = 'flex';
+}
+
+function showTelegramStep() {
+    document.getElementById('referralStep').style.display = 'none';
+    document.getElementById('telegramStep').style.display = 'block';
+}
+
+function showReferralStep() {
+    document.getElementById('idVerificationStep').style.display = 'none';
+    document.getElementById('referralStep').style.display = 'block';
+}
+
 // LuckyJet Game Logic
 async function getSignal() {
     const signalDisplay = document.getElementById('signalValue');
@@ -300,3 +315,155 @@ style.textContent = `
 }
 `;
 document.head.appendChild(style);
+
+// Language translations
+const translations = {
+    ru: {
+        welcome: "Привет!\n🚩Обязательно подпишитесь на наш Telegram-канал, чтобы всегда получать актуальные уведомления от бота!\n\n🔔 Это поможет не пропустить ни одного важного сигнала! 🚀",
+        referral: "🎉 Вот реферальная ссылка на нашего партнера! 🎉\n\n🚨 Важное предупреждение!🚨\n\nЕсли вы не зарегистрируетесь по этой ссылке, бот может показывать неверные результаты! ⚠️\n\nНЕ ЗАБУДЬ УКАЗАТЬ ПРОМОКОД - <span class='promo-code'>CashGen</span> 💸",
+        enterId: "Введите свой ID",
+        thanks: "Спасибо за регистрацию!",
+        channel: "Канал",
+        subscribed: "Подписался!",
+        registration: "Регистрация",
+        verify: "Проверка",
+        confirm: "Подтвердить",
+        back: "Назад",
+        startGame: "Начать игру",
+        playAgain: "Играть снова",
+        getSignal: "Получить сигнал",
+        flipCoin: "Бросить монету"
+    },
+    en: {
+        welcome: "Hello!\n🚩Be sure to subscribe to our Telegram channel to always receive up-to-date notifications from the bot!\n\n🔔 This will help you not miss any important signals! 🚀",
+        referral: "🎉 Here's the referral link to our partner! 🎉\n\n🚨 Important warning!🚨\n\nIf you don't register using this link, the bot may show incorrect results! ⚠️\n\nDON'T FORGET TO USE PROMO CODE - <span class='promo-code'>CashGen</span> 💸",
+        enterId: "Enter your ID",
+        thanks: "Thanks for registering!",
+        channel: "Channel",
+        subscribed: "Subscribed!",
+        registration: "Registration",
+        verify: "Verify",
+        confirm: "Confirm",
+        back: "Back",
+        startGame: "Start Game",
+        playAgain: "Play Again",
+        getSignal: "Get Signal",
+        flipCoin: "Flip Coin"
+    },
+    in: {
+        welcome: "नमस्ते!\n🚩बॉट से हमेशा अप-टू-डेट नोटिफिकेशन प्राप्त करने के लिए हमारे टेलीग्राम चैनल को सब्सक्राइब करना सुनिश्चित करें!\n\n🔔 यह आपको किसी भी महत्वपूर्ण सिग्नल को मिस नहीं करने में मदद करेगा! 🚀",
+        referral: "🎉 यहाँ हमारे पार्टनर का रेफरल लिंक है! 🎉\n\n🚨 महत्वपूर्ण चेतावनी!🚨\n\nयदि आप इस लिंक का उपयोग करके रजिस्टर नहीं करते हैं, तो बॉट गलत परिणाम दिखा सकता है! ⚠️\n\nप्रोमो कोड भूलना मत - <span class='promo-code'>CashGen</span> 💸",
+        enterId: "अपना ID दर्ज करें",
+        thanks: "पंजीकरण के लिए धन्यवाद!",
+        channel: "चैनल",
+        subscribed: "सब्सक्राइब किया!",
+        registration: "पंजीकरण",
+        verify: "सत्यापन",
+        confirm: "पुष्टि करें",
+        back: "वापस",
+        startGame: "खेल शुरू करें",
+        playAgain: "फिर से खेलें",
+        getSignal: "सिग्नल प्राप्त करें",
+        flipCoin: "सिक्का उछालें"
+    }
+};
+
+let currentLang = 'ru';
+
+// Update all button texts based on selected language
+function updateButtonTexts() {
+    // Subscription flow buttons
+    document.getElementById('channelBtn').textContent = translations[currentLang].channel;
+    document.getElementById('subscribedBtn').textContent = translations[currentLang].subscribed;
+    document.getElementById('registrationBtn').textContent = translations[currentLang].registration;
+    document.getElementById('verifyBtn').textContent = translations[currentLang].verify;
+    document.getElementById('submitIdBtn').textContent = translations[currentLang].confirm;
+    
+    // Game buttons
+    document.getElementById('startButton').textContent = translations[currentLang].startGame;
+    document.getElementById('restartBtn').textContent = translations[currentLang].playAgain;
+    
+    // Back buttons
+    const backButtons = document.querySelectorAll('.back-button');
+    backButtons.forEach(button => {
+        button.textContent = translations[currentLang].back;
+    });
+
+    // Update other game-specific buttons
+    const signalButton = document.querySelector('.signal-button');
+    if (signalButton) signalButton.textContent = translations[currentLang].getSignal;
+
+    const flipButton = document.querySelector('.flip-button');
+    if (flipButton) flipButton.textContent = translations[currentLang].flipCoin;
+}
+
+// Update message text with HTML support
+function updateMessageText(element, text) {
+    if (element) {
+        element.innerHTML = text; // Changed from textContent to innerHTML to support HTML tags
+    }
+}
+
+// Initialize language selection
+document.addEventListener('DOMContentLoaded', () => {
+    const gameContent = document.getElementById('gameContent');
+    const languageSelection = document.getElementById('languageSelection');
+    const subscriptionFlow = document.getElementById('subscriptionFlow');
+    
+    // Language selection handlers
+    document.querySelectorAll('.language-option').forEach(option => {
+        option.addEventListener('click', () => {
+            currentLang = option.dataset.lang;
+            languageSelection.style.display = 'none';
+            subscriptionFlow.style.display = 'block';
+            startSubscriptionFlow();
+            updateButtonTexts(); // Update all button texts when language is selected
+        });
+    });
+
+    // Subscription flow
+    function startSubscriptionFlow() {
+        const telegramStep = document.getElementById('telegramStep');
+        const referralStep = document.getElementById('referralStep');
+        const idVerificationStep = document.getElementById('idVerificationStep');
+
+        // Set initial message
+        updateMessageText(telegramStep.querySelector('.message-text'), translations[currentLang].welcome);
+
+        // Channel button
+        document.getElementById('channelBtn').addEventListener('click', () => {
+            window.open('https://t.me/+-OM0Pl6Ow_I2ZmM0', '_blank');
+        });
+
+        // Subscribed button
+        document.getElementById('subscribedBtn').addEventListener('click', () => {
+            telegramStep.style.display = 'none';
+            referralStep.style.display = 'block';
+            updateMessageText(referralStep.querySelector('.message-text'), translations[currentLang].referral);
+        });
+
+        // Registration button
+        document.getElementById('registrationBtn').addEventListener('click', () => {
+            window.open('https://1wxxlb.com/casino/list?open=register&p=dsgq', '_blank');
+        });
+
+        // Verify button
+        document.getElementById('verifyBtn').addEventListener('click', () => {
+            referralStep.style.display = 'none';
+            idVerificationStep.style.display = 'block';
+            idVerificationStep.querySelector('.message-text').textContent = translations[currentLang].enterId;
+        });
+
+        // ID verification
+        document.getElementById('submitIdBtn').addEventListener('click', () => {
+            const playerId = document.getElementById('playerId').value;
+            if (playerId.length === 8 && /^\d+$/.test(playerId)) {
+                alert(translations[currentLang].thanks);
+                subscriptionFlow.style.display = 'none';
+                gameContent.style.display = 'block';
+            } else {
+                alert(translations[currentLang].enterId);
+            }
+        });
+    }
+});
