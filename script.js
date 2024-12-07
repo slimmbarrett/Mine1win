@@ -369,8 +369,95 @@ style.textContent = `
 
 document.head.appendChild(style);
 
-// Language translations
+// Language selection and translations
 const translations = {
+    ru: {
+        subscribeTitle: 'Подпишитесь на наш Telegram канал',
+        joinChannel: 'Присоединиться к каналу',
+        enterUsername: 'Введите ваш Telegram username',
+        verifyButton: 'Проверить подписку',
+        registerTitle: 'Зарегистрируйтесь для игры',
+        registerNow: 'Зарегистрироваться',
+        enterPlayerId: 'Введите ваш ID игрока',
+        verifyId: 'Проверить ID',
+        backToMenu: 'Назад в меню',
+        gameOver: 'Игра окончена!',
+        playAgain: 'Играть снова'
+    },
+    en: {
+        subscribeTitle: 'Subscribe to our Telegram Channel',
+        joinChannel: 'Join Channel',
+        enterUsername: 'Enter your Telegram username',
+        verifyButton: 'Verify Subscription',
+        registerTitle: 'Register to Play',
+        registerNow: 'Register Now',
+        enterPlayerId: 'Enter your Player ID',
+        verifyId: 'Verify ID',
+        backToMenu: 'Back to Menu',
+        gameOver: 'Game Over!',
+        playAgain: 'Play Again'
+    },
+    in: {
+        subscribeTitle: 'हमारे टेलीग्राम चैनल को सब्सक्राइब करें',
+        joinChannel: 'चैनल से जुड़ें',
+        enterUsername: 'अपना टेलीग्राम यूजरनेम दर्ज करें',
+        verifyButton: 'सब्सक्रिप्शन सत्यापित करें',
+        registerTitle: 'खेलने के लिए रजिस्टर करें',
+        registerNow: 'अभी रजिस्टर करें',
+        enterPlayerId: 'अपना प्लेयर आईडी दर्ज करें',
+        verifyId: 'आईडी सत्यापित करें',
+        backToMenu: 'मेनू पर वापस जाएं',
+        gameOver: 'खेल समाप्त!',
+        playAgain: 'फिर से खेलें'
+    }
+};
+
+let currentLanguage = 'en';
+
+// Initialize language selection
+document.addEventListener('DOMContentLoaded', () => {
+    const languageOptions = document.querySelectorAll('.language-option');
+    languageOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const lang = option.getAttribute('data-lang');
+            setLanguage(lang);
+            document.getElementById('languageSelection').style.display = 'none';
+            document.getElementById('subscriptionStep').style.display = 'block';
+            updateTranslations();
+        });
+    });
+});
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('selectedLanguage', lang);
+}
+
+function updateTranslations() {
+    const trans = translations[currentLanguage];
+    
+    // Update subscription step
+    document.getElementById('subscribeTitle').textContent = trans.subscribeTitle;
+    document.querySelector('.telegram-button').textContent = trans.joinChannel;
+    document.getElementById('telegramUsername').placeholder = trans.enterUsername;
+    document.querySelector('.verify-button').textContent = trans.verifyButton;
+    
+    // Update registration step
+    document.getElementById('registerTitle').textContent = trans.registerTitle;
+    document.querySelector('.register-button').textContent = trans.registerNow;
+    document.getElementById('playerId').placeholder = trans.enterPlayerId;
+    document.querySelectorAll('.verify-button')[1].textContent = trans.verifyId;
+    
+    // Update game elements
+    document.querySelectorAll('.back-button').forEach(btn => {
+        btn.textContent = trans.backToMenu;
+    });
+    document.getElementById('gameOverText').textContent = trans.gameOver;
+    document.getElementById('restartBtn').textContent = trans.playAgain;
+}
+
+// Language translations
+const translationsOld = {
     ru: {
         welcome: "Привет!\n🚩Обязательно подпишитесь на наш Telegram-канал, чтобы всегда получать актуальные уведомления от бота!\n\n🔔 Это поможет не пропустить ни одного важного сигнала! 🚀",
         referral: "🎉 Вот реферальная ссылка на нашего партнера! 🎉\n\n🚨 Важное предупреждение!🚨\n\nЕсли вы не зарегистрируетесь по этой ссылке, бот может показывать неверные результаты! ⚠️\n\nНЕ ЗАБУДЬ УКАЗАТЬ ПРОМОКОД - <span class='promo-code'>CashGen</span> 💸",
@@ -426,28 +513,28 @@ let currentLang = 'ru';
 // Update all button texts based on selected language
 function updateButtonTexts() {
     // Subscription flow buttons
-    document.getElementById('channelBtn').textContent = translations[currentLang].channel;
-    document.getElementById('subscribedBtn').textContent = translations[currentLang].subscribed;
-    document.getElementById('registrationBtn').textContent = translations[currentLang].registration;
-    document.getElementById('verifyBtn').textContent = translations[currentLang].verify;
-    document.getElementById('submitIdBtn').textContent = translations[currentLang].confirm;
+    document.getElementById('channelBtn').textContent = translationsOld[currentLang].channel;
+    document.getElementById('subscribedBtn').textContent = translationsOld[currentLang].subscribed;
+    document.getElementById('registrationBtn').textContent = translationsOld[currentLang].registration;
+    document.getElementById('verifyBtn').textContent = translationsOld[currentLang].verify;
+    document.getElementById('submitIdBtn').textContent = translationsOld[currentLang].confirm;
     
     // Game buttons
-    document.getElementById('startButton').textContent = translations[currentLang].startGame;
-    document.getElementById('restartBtn').textContent = translations[currentLang].playAgain;
+    document.getElementById('startButton').textContent = translationsOld[currentLang].startGame;
+    document.getElementById('restartBtn').textContent = translationsOld[currentLang].playAgain;
     
     // Back buttons
     const backButtons = document.querySelectorAll('.back-button');
     backButtons.forEach(button => {
-        button.textContent = translations[currentLang].back;
+        button.textContent = translationsOld[currentLang].back;
     });
 
     // Update other game-specific buttons
     const signalButton = document.querySelector('.signal-button');
-    if (signalButton) signalButton.textContent = translations[currentLang].getSignal;
+    if (signalButton) signalButton.textContent = translationsOld[currentLang].getSignal;
 
     const flipButton = document.querySelector('.flip-button');
-    if (flipButton) flipButton.textContent = translations[currentLang].flipCoin;
+    if (flipButton) flipButton.textContent = translationsOld[currentLang].flipCoin;
 }
 
 // Update message text with HTML support
@@ -481,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const idVerificationStep = document.getElementById('idVerificationStep');
 
         // Set initial message
-        updateMessageText(telegramStep.querySelector('.message-text'), translations[currentLang].welcome);
+        updateMessageText(telegramStep.querySelector('.message-text'), translationsOld[currentLang].welcome);
 
         // Channel button
         document.getElementById('channelBtn').addEventListener('click', () => {
@@ -492,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('subscribedBtn').addEventListener('click', () => {
             telegramStep.style.display = 'none';
             referralStep.style.display = 'block';
-            updateMessageText(referralStep.querySelector('.message-text'), translations[currentLang].referral);
+            updateMessageText(referralStep.querySelector('.message-text'), translationsOld[currentLang].referral);
         });
 
         // Registration button
@@ -504,18 +591,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('verifyBtn').addEventListener('click', () => {
             referralStep.style.display = 'none';
             idVerificationStep.style.display = 'block';
-            idVerificationStep.querySelector('.message-text').textContent = translations[currentLang].enterId;
+            idVerificationStep.querySelector('.message-text').textContent = translationsOld[currentLang].enterId;
         });
 
         // ID verification
         document.getElementById('submitIdBtn').addEventListener('click', () => {
             const playerId = document.getElementById('playerId').value;
             if (playerId.length === 8 && /^\d+$/.test(playerId)) {
-                alert(translations[currentLang].thanks);
+                alert(translationsOld[currentLang].thanks);
                 subscriptionFlow.style.display = 'none';
                 gameContent.style.display = 'block';
             } else {
-                alert(translations[currentLang].enterId);
+                alert(translationsOld[currentLang].enterId);
             }
         });
     }
