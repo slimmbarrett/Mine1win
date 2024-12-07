@@ -21,7 +21,7 @@
 :root {
     --primary: #97A3CB;
     --primary-dark: #7683A9;
-    --background: #000000;
+    --background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
     --cell-bg: rgba(151, 163, 203, 0.2);
     --cell-border: rgba(151, 163, 203, 0.6);
     --modal-bg: rgba(0, 0, 0, 0.8);
@@ -38,13 +38,15 @@
 }
 
 body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
     background-color: var(--background);
     background-image: url('backgroundPhone.22ee95b37f8094fe25be.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    color: var(--primary);
-    font-family: 'FS Elliot Pro', 'Halvar Breit', system-ui, -apple-system, sans-serif;
+    color: white;
     min-height: 100vh;
 }
 
@@ -597,11 +599,16 @@ body {
     top: 20px;
     left: 20px;
     padding: 10px 20px;
-    background: #444;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
     color: white;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* LuckyJet Styles */
@@ -784,4 +791,176 @@ body {
     width: 100%;
     height: auto;
     max-width: 200px;
+}
+
+/* Language Selection */
+.language-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: transparent;
+    padding: 20px;
+}
+
+.language-options {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+}
+
+.language-option {
+    font-size: 64px;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: fadeIn 0.5s ease-out;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.language-option:hover {
+    transform: scale(1.2);
+}
+
+/* Subscription Flow */
+.subscription-step {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    opacity: 0;
+    animation: fadeInCenter 0.5s ease-out forwards;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.message-text {
+    color: white;
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 60px auto 30px;
+    white-space: pre-line;
+    text-align: center;
+    max-width: 90%;
+}
+
+.button-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+#playerId {
+    width: 80%;
+    max-width: 300px;
+    padding: 12px;
+    font-size: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    text-align: center;
+}
+
+.action-button {
+    padding: 12px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+}
+
+#subscriptionFlow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    display: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInCenter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Promo Code Styles */
+.promo-code {
+    color: #00ff00;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
