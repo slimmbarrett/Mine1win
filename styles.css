@@ -612,6 +612,54 @@ body {
 }
 
 /* LuckyJet Styles */
+.game-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.luckyjet-image {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+    animation: fly 2s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes fly {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+    75% {
+        transform: translateY(10px) rotate(-5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+.signal-display {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px 40px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #4CAF50;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    min-width: 150px;
+}
+
 .luckyjet-content {
     display: flex;
     flex-direction: column;
@@ -621,16 +669,6 @@ body {
 
 .game-logo {
     max-width: 300px;
-    margin: 20px 0;
-}
-
-.signal-display {
-    background: #000;
-    padding: 30px 60px;
-    border-radius: 10px;
-    font-size: 48px;
-    font-weight: bold;
-    color: #00ff00;
     margin: 20px 0;
 }
 
@@ -646,6 +684,130 @@ body {
 .action-button:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+}
+
+.signal-button,
+.flip-button {
+    background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+    border: none;
+    border-radius: 25px;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.signal-button:hover,
+.flip-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+    background: linear-gradient(45deg, #FF8E53, #FF6B6B);
+}
+
+.signal-button:active,
+.flip-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(255, 107, 107, 0.4);
+}
+
+.signal-button::before,
+.flip-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.signal-button:hover::before,
+.flip-button:hover::before {
+    left: 100%;
+}
+
+.signal-button:disabled,
+.flip-button:disabled {
+    background: linear-gradient(45deg, #ccc, #999);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Game-specific button styles */
+.signal-button {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+.signal-button:hover {
+    background: linear-gradient(45deg, #45a049, #4CAF50);
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
+}
+
+.flip-button {
+    background: linear-gradient(45deg, #2196F3, #1976D2);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+}
+
+.flip-button:hover {
+    background: linear-gradient(45deg, #1976D2, #2196F3);
+    box-shadow: 0 8px 20px rgba(33, 150, 243, 0.6);
+}
+
+/* Container styles for better button positioning */
+.signal-container,
+.coinflip-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.game-title {
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Back button style update */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.back-button:active {
+    transform: translateY(0);
 }
 
 /* CoinFlip Styles */
@@ -691,19 +853,20 @@ body {
 }
 
 .flip-result {
+    font-size: 2em;
+    font-weight: bold;
     text-align: center;
-    margin: 20px auto;
-    padding: 15px;
-    background: rgba(151, 163, 203, 0.1);
-    border: 1px solid var(--primary);
-    border-radius: 10px;
-    color: var(--primary);
-    font-size: 18px;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
+    margin-top: 20px;
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.flip-result.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Common Button Styles */
