@@ -7,101 +7,147 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="top-logo">
-        <img src="1win-normal copy.svg" alt="1Win Logo">
-    </div>
-    <div class="marquee-container">
-        <div class="marquee">
-            <span>PROMO - CashGen</span>
-            <span>PROMO - CashGen</span>
-            <span>PROMO - CashGen</span>
-            <span>PROMO - CashGen</span>
-            <span>PROMO - CashGen</span>
-            <span>PROMO - CashGen</span>
-            <span>PROMO - CashGen</span>
-            <span>PROMO - CashGen</span>
+    <!-- Language Selection Screen -->
+    <div id="languageSelection" class="language-container">
+        <div class="language-options">
+            <div class="language-option" data-lang="ru">🇷🇺</div>
+            <div class="language-option" data-lang="en">🇬🇧</div>
+            <div class="language-option" data-lang="in">🇮🇳</div>
         </div>
     </div>
-    <div class="container">
-        <!-- Main Menu -->
-        <div id="mainMenu">
-            <div class="menu-grid">
-                <div class="game-card" onclick="showGame('mines')">
-                    <img src="1win Mines.png" alt="Mines Game">
-                    <h2>Mines</h2>
-                </div>
-                <div class="game-card" onclick="showGame('luckyjet')">
-                    <img src="Lucky Jet Game 3.jpg" alt="LuckyJet Game">
-                    <h2>LuckyJet</h2>
-                </div>
-                <div class="game-card bottom-card" onclick="showGame('coinflip')">
-                    <img src="Euro Coin Icon.png" alt="CoinFlip Game">
-                    <h2>CoinFlip</h2>
-                </div>
+
+    <!-- Subscription Flow -->
+    <div id="subscriptionFlow" style="display: none;">
+        <!-- Telegram Channel Step -->
+        <div id="telegramStep" class="subscription-step">
+            <button class="back-button" onclick="showLanguageSelection()">Назад</button>
+            <div class="message-text"></div>
+            <div class="button-container">
+                <button class="action-button" id="channelBtn">Канал</button>
+                <button class="action-button" id="subscribedBtn">Подписался!</button>
             </div>
         </div>
 
-        <!-- Mines Game -->
-        <div id="minesGame" class="game-container" style="display: none;">
-            <button onclick="showMenu()" class="back-button">Back to Menu</button>
-            <div class="mines-content">
-                <div class="mines-header">
-                    <h2 class="game-title">Mines</h2>
+        <!-- Referral Step -->
+        <div id="referralStep" class="subscription-step" style="display: none;">
+            <button class="back-button" onclick="showTelegramStep()">Назад</button>
+            <div class="message-text"></div>
+            <div class="button-container">
+                <button class="action-button" id="registrationBtn">Регистрация</button>
+                <button class="action-button" id="verifyBtn">Проверка</button>
+            </div>
+        </div>
+
+        <!-- ID Verification Step -->
+        <div id="idVerificationStep" class="subscription-step" style="display: none;">
+            <button class="back-button" onclick="showReferralStep()">Назад</button>
+            <div class="message-text"></div>
+            <div class="input-container">
+                <input type="text" id="playerId" maxlength="8" placeholder="Введите ID">
+                <button class="action-button" id="submitIdBtn">Подтвердить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Content -->
+    <div id="gameContent" style="display: none;">
+        <!-- Logo -->
+        <div class="top-logo">
+            <img src="1win-normal copy.svg" alt="1Win Logo">
+        </div>
+
+        <!-- Promo Code Marquee -->
+        <div class="marquee-container">
+            <div class="marquee">
+                <span>PROMO - CashGen</span>
+                <span>PROMO - CashGen</span>
+                <span>PROMO - CashGen</span>
+                <span>PROMO - CashGen</span>
+                <span>PROMO - CashGen</span>
+                <span>PROMO - CashGen</span>
+                <span>PROMO - CashGen</span>
+                <span>PROMO - CashGen</span>
+            </div>
+        </div>
+
+        <!-- Game Container -->
+        <div class="container">
+            <!-- Main Menu -->
+            <div id="mainMenu">
+                <div class="menu-grid">
+                    <div class="game-card" onclick="showGame('mines')">
+                        <img src="1win Mines.png" alt="Mines Game">
+                        <h2>Mines</h2>
+                    </div>
+                    <div class="game-card" onclick="showGame('luckyjet')">
+                        <img src="Lucky Jet Game 3.jpg" alt="LuckyJet Game">
+                        <h2>LuckyJet</h2>
+                    </div>
+                    <div class="game-card bottom-card" onclick="showGame('coinflip')">
+                        <img src="Euro Coin Icon.png" alt="CoinFlip Game">
+                        <h2>CoinFlip</h2>
+                    </div>
                 </div>
-                <div id="gameGrid" class="game-grid"></div>
-                <div class="controls">
-                    <div class="mines-select-container">
-                        <label for="minesCount">Select Mines:</label>
+            </div>
+
+            <!-- Mines Game -->
+            <div id="minesGame" class="game-container" style="display: none;">
+                <button onclick="showMenu()" class="back-button">Back to Menu</button>
+                <div class="mines-content">
+                    <div class="mines-header">
+                        <h2 class="game-title">Mines</h2>
+                    </div>
+                    <div id="gameGrid" class="game-grid"></div>
+                    <div class="game-controls">
                         <select id="minesCount">
                             <option value="3">3 Mines</option>
                             <option value="5">5 Mines</option>
                             <option value="7">7 Mines</option>
-                            <option value="10">10 Mines</option>
-                            <option value="13">13 Mines</option>
                         </select>
-                    </div>
-                    <button id="startButton" class="action-button">Start Game</button>
-                </div>
-                <div id="gameOverModal" class="modal">
-                    <div class="modal-content">
-                        <h2 id="gameOverText">Game Over!</h2>
-                        <button id="restartBtn" class="action-button">Play Again</button>
+                        <button id="startButton" class="start-button">Start Game</button>
+                        <button class="sound-button" onclick="toggleSound()">
+                            <img src="sound-on.svg" alt="Toggle Sound">
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- LuckyJet Game -->
-        <div id="luckyjetGame" class="game-container" style="display: none;">
-            <button onclick="showMenu()" class="back-button">Back to Menu</button>
-            <div class="luckyjet-content">
-                <img src="Luckyjet Logo.png" alt="LuckyJet Logo" class="game-logo">
-                <h2 class="result-title">Result</h2>
-                <div class="signal-display">
-                    <span id="signalValue">0.00</span>
+            <!-- LuckyJet Game -->
+            <div id="luckyjetGame" class="game-container" style="display: none;">
+                <button onclick="showMenu()" class="back-button">Back to Menu</button>
+                <div class="luckyjet-content">
+                    <div class="signal-container">
+                        <button onclick="getSignal()" class="signal-button">Get Signal</button>
+                        <div id="signalResult" class="signal-result"></div>
+                    </div>
                 </div>
-                <button onclick="getSignal()" class="action-button">Get Signal</button>
             </div>
-        </div>
 
-        <!-- CoinFlip Game -->
-        <div id="coinflipGame" class="game-container" style="display: none;">
-            <button onclick="showMenu()" class="back-button">Back to Menu</button>
-            <div class="coinflip-content">
-                <div id="coin">
-                    <div class="side-a">
-                        <img src="Euro Coin Icon.png" alt="Heads">
+            <!-- CoinFlip Game -->
+            <div id="coinflipGame" class="game-container" style="display: none;">
+                <button onclick="showMenu()" class="back-button">Back to Menu</button>
+                <div class="coinflip-content">
+                    <div class="coin-container">
+                        <div id="coin" class="coin">
+                            <div class="heads"></div>
+                            <div class="tails"></div>
+                        </div>
                     </div>
-                    <div class="side-b">
-                        <img src="Dollar Coin Icon.png" alt="Tails">
-                    </div>
+                    <button onclick="flipCoin()" class="flip-button">Flip Coin</button>
                 </div>
-                <div id="flipResult" class="flip-result"></div>
-                <button onclick="flipCoin()" class="action-button">Flip</button>
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <h2 id="gameOverText"></h2>
+            <button id="restartBtn">Play Again</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="script.js"></script>
-    <audio id="clickSound" src="Button Press Sound 30362.mp3" preload="auto"></audio>
 </body>
 </html>
