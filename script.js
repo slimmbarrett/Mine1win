@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Registration button
         document.getElementById('registrationBtn').addEventListener('click', () => {
-            window.open('https://1wlmhc.com/v3/2158/1win-mines?p=qr3o', '_blank');
+            window.open('https://1wjmbe.com/v3/aggressive-casino?p=e0zo', '_blank');
         });
 
         // Verify button
